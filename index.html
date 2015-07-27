@@ -23,6 +23,9 @@
         }
     }
 };
+var id = getUrlParameter('id');
+$('#id').html(id);
+
     </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -53,7 +56,7 @@
           <span class="credits left">Project maintained by <a href="https://github.com/genghisdani">genghisdani</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
-        <h3>id=</h3><script>echo getUrlParameter('id');</script>
+        <h3>id=</h3><p id="id"></p>
       </section>
 
     </div>
