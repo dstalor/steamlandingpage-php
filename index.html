@@ -24,7 +24,6 @@
     }
 };
 var id = getUrlParameter('id');
-jQuery('#id').text(id);
 
     </script>
     <!--[if lt IE 9]>
@@ -61,6 +60,6 @@ jQuery('#id').text(id);
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+    <script>jQuery('#id').text(id);</script>
   </body>
 </html>
