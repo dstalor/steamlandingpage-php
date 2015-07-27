@@ -55,14 +55,14 @@ var id = getUrlParameter('id');
           <span class="credits left">Project maintained by <a href="https://github.com/genghisdani">genghisdani</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
-        <h3>id=</h3><p id="id"></p>
+        <h3>Steam JSON</h3><p id="steamJson"></p>
       </section>
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     <script>
     var steamJson = $.get("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=D7BBEDA6BF1773C67682CB379F3CA135&steamids="+id);
-    $('#id').text(id);
+    $('#steamJson').text(steamJson);
       </script>
   </body>
 </html>
