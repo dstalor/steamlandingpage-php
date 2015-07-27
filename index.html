@@ -60,6 +60,9 @@ var id = getUrlParameter('id');
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    <script>jQuery('#id').text(id);</script>
+    <script>
+    var steamJson = $.get("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=D7BBEDA6BF1773C67682CB379F3CA135&steamids="+id);
+    $('#id').text(id);
+      </script>
   </body>
 </html>
