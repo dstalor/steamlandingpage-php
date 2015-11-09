@@ -1,72 +1,67 @@
-<!doctype html>
-<html>
+<!doctype html> <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Steamlandingpage by genghisdani</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <script>
-      var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
-var id = getUrlParameter('id');
-
-    </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<style>
+body {
+      font-family: 'Roboto', sans-serif;
+background: #212121;
+color: #FFFFFF;
+}
+a {
+color: #03A9F4;
+}
+a:hover {
+color: #81D4FA;
+}
+* {
+target-new: tab ! important;
+}
+</style>
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/genghisdani/steamlandingpage">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/genghisdani/steamlandingpage/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/genghisdani/steamlandingpage/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
-
-      <section>
-        <div id="title">
-          <h1>Steamlandingpage</h1>
-          <p>A landing page for using in the Steam in-game web browser, with links and info for the game currently being played.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/genghisdani">genghisdani</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-        <h3>ID</h3>
-        <p>
-          <?php echo 'Hello ' . htmlspecialchars($_GET["id"]) . '!'; ?>
-        </p>
-        <h3>Steam JSON</h3><p><pre id="steamJson"></pre></p>
-      </section>
-
+  <p>
+      Welcome<span id="playername"></span>!<br>
+      <div id="extrainfo"></div>
+      <ul>
+        <li><a href="https://www.google.com">Google</a></li>
+        <li><a href="https://en.wikipedia.org">Wikipedia (en)</a></li>
+        <li><a href="https://www.youtube.com">YouTube</a></li>
+        <li><a href="https://www.facebook.com/">Facebook</a></li>
+        <li><a href="https://www.messenger.com/">Facebook Messenger</a></li>
+        <li><a href="https://www.reddit.com">Reddit</a></li>
+      </ul>
+      <ul>
+        <li><a href="http://minecraft.gamepedia.com">Minecraft Wiki</a></li>
+        <li><a href="http://gta.wikia.com">GTA Wiki</a></li>
+        <li><a href="http://masseffect.wikia.com">Mass Effect Wiki</a></li>
+        <li><a href="http://terraria.gamepedia.com">Terraria Wiki</a></li>
+      </ul>
+  </p>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    <script>
-    var steamJson = $.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0001/?key=6BE225EA85E79A097FB2C2D24E2DFDA4&steamids="+id);
-    $('#steamJson').text(steamJson);
-      </script>
-  </body>
+    <script type="text/javascript">
+      $.post( "steamlink.php", { id: "<?= htmlspecialchars($_GET["id"]) ?>", name: "<?= htmlspecialchars($_GET["name"]) ?>" })
+        .done(function( data ) {
+          var lastlogoff = new Date(data.lastlogoff * 1000);
+          $('#playername').html(' '+data.personaname);
+          var gameextrainfo = '';
+          if (data.gameid != undefined) {
+            gameextrainfo = 'Currently playing: '+data.gameextrainfo+'</br>' +
+              '<a href="http://pcgamingwiki.com/api/appid.php?appid='+data.gameid+'" target="new">PCGamingWiki</a></br>'+
+              '<a href="https://steamdb.info/app/'+data.gameid+'" target="new">SteamDB</a></br>';
+          }
+          $('#extrainfo').html('You last logged off: '+lastlogoff.toLocaleString()+'<br>'+
+            '<img src="'+data.avatar+'" /><br>'+gameextrainfo);
+        });
+    </script>
+</body> 
 </html>
